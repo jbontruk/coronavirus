@@ -1,26 +1,32 @@
 # Library
 library(dplyr)
 
-# Get data v1
+# Get data from ecdc.europa.eu
 setwd('C:/Users/jaros/Downloads')
 list.files()
 file = list.files()[1]
 data <- read.csv2(file, sep = ',', stringsAsFactors = F)
+data <- data %>%
+  rename(Country = Countries.and.territories,
+         Cases_Cum = Cases.CumSum)
 
-# Get data v2
+# Get data from data.humdata.org
 setwd('C:/Users/jaros/Downloads')
 list.files()
 file = list.files()[1]
 data <- read.csv2(file, sep = ',', stringsAsFactors = F)
+data <- data %>%
+  rename(Country = Country.Region,
+         Cases_Cum = Value)
 
 # Fit Sigma function
 fit_sigma <- function(country = "South_Korea", x_days = 80, y_lim = 5000) {
   country_data <- data %>% 
-    filter(Country.Region == country & DayNo != 0 & DayNo <= x_days) %>%
+    filter(Country == country & DayNo != 0 & DayNo <= x_days) %>%
     arrange(DayNo)
   
   x = country_data$DayNo
-  y = country_data$Value
+  y = country_data$Cases_Cum
 
   fit <- nls(y ~ SSlogis(x, Asym, xmid, scal), data = data.frame(x, y))
   print(summary(fit))
