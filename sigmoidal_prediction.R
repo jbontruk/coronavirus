@@ -7,7 +7,7 @@ list.files()
 file = list.files()[1]
 data <- read.csv2(file, sep = ',', stringsAsFactors = F)
 data <- data %>%
-  rename(Country = Countries.and.territories,
+  rename(Country = countriesAndTerritories,
          Cases_Cum = Cases.CumSum)
 
 # Get data from data.humdata.org
@@ -20,7 +20,7 @@ data <- data %>%
          Cases_Cum = Value)
 
 # Fit Sigma function
-fit_sigma <- function(country = "South_Korea", x_days = 80, y_lim = 5000) {
+fit_sigma <- function(country = "South_Korea", x_days = 100, y_lim = 5000) {
   country_data <- data %>% 
     filter(Country == country & DayNo != 0 & DayNo <= x_days) %>%
     arrange(DayNo)
@@ -37,9 +37,9 @@ fit_sigma <- function(country = "South_Korea", x_days = 80, y_lim = 5000) {
         predict(fit, newdata = data.frame(x = seq(0, 100, length.out = 100))))
 }
 
-# Run simulation
-ctr <- 'Korea, South'
-ylim <- 10000
+# Run simulaion
+ctr <- 'Japan'
+ylim <- 5000
 
 fit_sigma(ctr, 4, ylim)
 fit_sigma(ctr, 5, ylim)
@@ -118,3 +118,23 @@ fit_sigma(ctr, 77, ylim)
 fit_sigma(ctr, 78, ylim)
 fit_sigma(ctr, 79, ylim)
 fit_sigma(ctr, 80, ylim)
+fit_sigma(ctr, 81, ylim)
+fit_sigma(ctr, 82, ylim)
+fit_sigma(ctr, 83, ylim)
+fit_sigma(ctr, 84, ylim)
+fit_sigma(ctr, 85, ylim)
+fit_sigma(ctr, 86, ylim)
+fit_sigma(ctr, 87, ylim)
+fit_sigma(ctr, 88, ylim)
+fit_sigma(ctr, 89, ylim)
+fit_sigma(ctr, 90, ylim)
+fit_sigma(ctr, 91, ylim)
+fit_sigma(ctr, 92, ylim)
+fit_sigma(ctr, 93, ylim)
+fit_sigma(ctr, 94, ylim)
+fit_sigma(ctr, 95, ylim)
+fit_sigma(ctr, 96, ylim)
+fit_sigma(ctr, 97, ylim)
+fit_sigma(ctr, 98, ylim)
+fit_sigma(ctr, 99, ylim)
+fit_sigma(ctr, 100, ylim)
