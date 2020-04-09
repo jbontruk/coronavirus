@@ -3,8 +3,9 @@ library(dplyr)
 
 # Get data from ecdc.europa.eu
 setwd('C:/Users/jaros/Downloads')
+setwd('C:/Users/jaroslaw.bontruk/Downloads')
 list.files()
-file = list.files()[1]
+file = list.files()[6]
 data <- read.csv2(file, sep = ',', stringsAsFactors = F)
 data <- data %>%
   rename(Country = countriesAndTerritories,
@@ -31,15 +32,15 @@ fit_sigma <- function(country = "South_Korea", x_days = 100, y_lim = 5000) {
   fit <- nls(y ~ SSlogis(x, Asym, xmid, scal), data = data.frame(x, y))
   print(summary(fit))
   
-  plot(y ~ x, xlim = c(0,100), ylim = c(0, y_lim), 
+  plot(y ~ x, xlim = c(0,120), ylim = c(0, y_lim), 
        xlab = 'DayNo', ylab = 'Cases', main = paste0('Cases in ', country))
-  lines(seq(0, 100, length.out = 100),
-        predict(fit, newdata = data.frame(x = seq(0, 100, length.out = 100))))
+  lines(seq(0, 120, length.out = 120),
+        predict(fit, newdata = data.frame(x = seq(0, 120, length.out = 120))))
 }
 
 # Run simulaion
-ctr <- 'Japan'
-ylim <- 5000
+ctr <- 'Poland'
+ylim <- 10000
 
 fit_sigma(ctr, 4, ylim)
 fit_sigma(ctr, 5, ylim)
